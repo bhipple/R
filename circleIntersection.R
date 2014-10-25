@@ -1,23 +1,37 @@
 # Monte Carlo method to calculate the area
 # of intersection of two circles
 
+## ============================================================================
+##                             Configure Circles
+## ============================================================================
+# [x, y, r]
+circle1 <- c(3, 1, 4)
+circle2 <- c(1, 1, 3)
+
+
+## ============================================================================
+##                                  Program
+## ============================================================================
 # pt = [x, y]
 # circ = [x, y, r], where x and y are the coordinates of the center
 inCircle <- function(pt, circ) {
-    if(sqrt((pt[1] - circ[1])^2 + (pt[2] - circ[2])^2) < circ[3]) {
+    if((pt[1] - circ[1])^2 + (pt[2] - circ[2])^2 < circ[3]^2) {
         return(1)
     }
     return(0)
 }
 
-# Setup
-circle1 <- c(0, 0, 1) # [x, y, r]
-circle2 <- c(1, 0, 1)
-boundingRectangle <- c(-1, 2, -1, 1)  # [x1, x2, y1, y2]
+# Calculate bounding rectangle
+boundingRectangle <- c(min(circle1[1] - circle1[3], circle2[1] - circle2[3]),
+                       max(circle1[1] + circle1[3], circle2[1] + circle2[3]),
+                       min(circle1[2] - circle1[3], circle2[2] - circle2[3]),
+                       max(circle1[2] + circle1[3], circle2[2] + circle2[3]))
+
+
+rectangleArea <- (boundingRectangle[2] - boundingRectangle[1]) * (boundingRectangle[4] - boundingRectangle[3])
 
 
 # Simulate
-rectangleArea <- (boundingRectangle[2] - boundingRectangle[1]) * (boundingRectangle[4] - boundingRectangle[3])
 cnt <- 0
 hit1 <- 0
 hit2 <- 0
